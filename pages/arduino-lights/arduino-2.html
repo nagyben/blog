@@ -1,0 +1,69 @@
+<h1>Bluetooth Controlled LED Lights Using Arduino</h1>
+<h2>Part 2</h2>
+<h4>by <span class="author">Ben Nagy</span>29 May 2017</h4>
+
+<img src="http://placehold.it/650x300?text=Part+2" />
+
+<p>
+  <i>This is the second article in a 5-article series covering the design and development of a custom Bluetooth-controlled LED lighting system using Arduino Nano boards. In case you missed the first one, see <a ui-sref="arduino-lights-1"> Part 1 - Introduction<a></i>
+</p>
+
+<p>
+  My first goal was to design a printed circuit board. I was intending to deploy multiple of these around the house and having a reusable hardware platform would make deployment a lot easier. Custom PCBs have become so cheap that anyone can have them manufactured at minimal cost.
+</p>
+
+<p>
+  My design software of choice was DesignSpark PCB. It is open-source, well-maintained and has all the features I need to design medium-complexity boards. Most importantly, it can generate the Gerber files which are needed to manufacture the board. I won't go in-depth into how to use DesignSpark - there are plenty of resources online.
+</p>
+
+<h3>Board requirements</h3>
+
+<p>
+  First, we must specify some requirements for our board. This step is crucial because it helps us to define the scope and guides our design process. We will take a top-down approach to this task: to begin, we will look at what the customer wants (i.e. what I want) and note these down as <b>user requirements</b>. Then, for each user requirement, we will generate a new set of <b>system requirements</b>.
+</p>
+
+<h3>User requirements</h3>
+<p>
+  I already know what I want this system to do so I've made a list below:
+</p>
+
+<ol>
+  <li>I want to control a 12V LED strip with three color channels (RGB), both color and intensity</li>
+  <li>I want it to have an Arduino Nano as the microcontroller (because they are easy to code up and are dirt cheap)</li>
+  <li>I want it to have a Bluetooth link so that I can control it remotely</li>
+  <li>I also want it to be extensible - for example, when somebody walks in the room the LEDs light up or have it flash to music</li>
+  <li>I want the Nano to be replaceable in case of a hardware fault (it's <b>very</b> easy to blow these things up accidentally)</li>
+</ol>
+
+<h3>System requirements</h3>
+<p>
+  Now that we have our user requirements, we can start thinking of our implementation. Our system requirements are:
+</p>
+
+<ol>
+  <li>It needs a 240VAC to 12VDC adaptor. An Arduino can take input between 5-12V on the Vin pin. Additionally, the LEDs require 12V</li>
+  <li>The Arduino can output maximum 5V and runs on low (&lt;100mA) current so we need a MOSFET for each LED channel (three in total for RGB). MOSFETs are better suited to higher-current applications than BJTs - the LED strips will draw up to 4A</li>
+  <li>The output channels must be connected to PWM-able pins in order to have full control over color and intensity</li>
+  <li>It needs several 5V I/O channels to support low voltage sensors, microphones, switches - I'll choose three for now</li>
+  <li>The I/Os must support analog and digital channels</li>
+  <li>It must have a small footprint</li>
+  <li>The Nano, LED strip and sensors should all be removable / disconnectable</li>
+</ol>
+
+<p>
+  This short list of requirements is enough to begin working on a board. Firing up DesignSpark, let's begin by setting up a new schematic and pulling all of our required components. To recap, we will need the following:
+</p>
+<ul>
+  <li>1x Arduino Nano</li>
+  <li>3x MOSFET</li>
+  <li>1x 4-pin RGB LED strip connector</li>
+  <li>3x 3-pin I/O connector (JST 3-pin)</li>
+  <li>1x 12V jack connector</li>
+  <li>Various resistors</li>
+</ul>
+
+<img src="http://placehold.it/650x300?textNanIO+schematic+1">
+
+<p>
+  We can sta
+</p>
